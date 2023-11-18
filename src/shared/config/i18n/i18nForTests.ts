@@ -13,4 +13,5 @@ i18n
         },
         resources: { ru: { translations: {} } },
     });
+
 export default i18n;
