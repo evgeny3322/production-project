@@ -1,18 +1,18 @@
+import React, { useCallback, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useState } from 'react';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
-import { LoginModal } from 'features/AuthByUsername';
+import { LoginModal } from 'features/AuthByUserName';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserAuthData, userActions } from 'entities/User';
-import cls from './Navbar.module.scss';
+import s from './Navbar.module.scss';
 
 interface NavbarProps {
-    className?: string;
+    className?: string
 }
 
 export const Navbar = ({ className }: NavbarProps) => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('navbar');
     const [isAuthModal, setIsAuthModal] = useState(false);
     const authData = useSelector(getUserAuthData);
     const dispatch = useDispatch();
@@ -31,33 +31,27 @@ export const Navbar = ({ className }: NavbarProps) => {
 
     if (authData) {
         return (
-            <div className={classNames(cls.Navbar, {}, [className])}>
+            <div className={classNames(s.Navbar, {}, [className])}>
                 <Button
                     theme={ButtonTheme.CLEAR_INVERTED}
-                    className={cls.links}
+                    className={s.links}
                     onClick={onLogout}
                 >
-                    {t('Выйти')}
+                    {t('navbar:выйти')}
                 </Button>
-            </div>
-        );
+            </div>);
     }
 
     return (
-        <div className={classNames(cls.Navbar, {}, [className])}>
+        <div className={classNames(s.Navbar, {}, [className])}>
             <Button
                 theme={ButtonTheme.CLEAR_INVERTED}
-                className={cls.links}
+                className={s.links}
                 onClick={onShowModal}
             >
-                {t('Войти')}
+                {t('navbar:войти')}
             </Button>
-            {isAuthModal && (
-                <LoginModal
-                    isOpen={isAuthModal}
-                    onClose={onCloseModal}
-                />
-            )}
+            {isAuthModal && <LoginModal isOpen={isAuthModal} onClose={onCloseModal} />}
         </div>
     );
 };

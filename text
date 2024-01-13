@@ -1,0 +1,115 @@
+npm init -y
+
+2
+> npm install webpack webpack-cli --save-dev
+npm i -D webpack@5.69.1 webpack-cli@4.9.2         4.10.0
+npm i -D html-webpack-plugin@5.5.0
+npm i -D typescript@4.5.5 ts-loader@9.2.6
+npm install --save -dev typescript@4.5.5  ts-node@10.5.0  @types/node@17.0.21  @types/webpack@5.28.0
+
+3
+npm i -D webpack-dev-server@4.7.4 @types/webpack-dev-server@4.7.2
+
+4
+npm i react@17.0.2 react-dom@17.0.2
+npm i -D @types/react@17.0.39 @types/react-dom@17.0.11
+
+5
+npm install sass-loader sass webpack style-loader css-loader --save-dev
+npm i -D mini-css-extract-plugin@2.5.3
+
+7
+npm i -D @types/react-router-dom@6.2.1
+
+13
+npm install @svgr/webpack@6.2.1 --save-dev
+npm install file-loader@6.2.0 --save-dev
+
+15
+npm install i18next@21.6.11 react-i18next@11.15.5 --save
+npm install i18next-http-backend@1.3.2 i18next-browser-languagedetector@6.1.3 --save
+
+17
+npm install --save-dev babel-loader@8.2.3  @babel/core
+ npm install @babel/preset-env@7.16.11 --save-dev
+ npm i -D babel-plugin-i18next-extract@0.8.3 --save-dev
+
+---- npm i -D babel-loader@8.2.3 @babel/core@7.17.5 babel-plugin-i18next-extract@0.8.3
+----npm i -D @babel/preset-env@7.16.11
+
+18
+npm install --save-dev eslint@8.10.0
+npm init @eslint/config
+
+eslint "**/*.{ts,tsx}"
+eslint "**/*.{ts,tsx}" --fix
+
+
+После установки и настройки eslint вылазит следующая ошибка., при этом если удалит eslint все сново работает
+[webpack-cli] Failed to load 'D:\practice\production_project\webpack.config.ts' config
+[webpack-cli] Error: Debug Failure. False expression: Non-string value passed to `ts.resolveTypeReferenceDirective`, likely by a wrapping package working with an outdated `resolveTypeReferenceDirectives` signature. This is probably not
+a problem in TS itself.
+У меня была версия 8.23.1, я в package.json переписал на 8.10.0, удалил node_modules, переустановил и норм стало
+Проблема в версии typescript, после установки eslint проверьте версию typescript, у меня она изменилась, пришлось откатить обратно и все заработало
+
+
+19
+npm i -D stylelint@14.5.3 stylelint-config-standard-scss@3.0.0
+npm i -D eslint-plugin-i18next@5.1.2
+
+20
+npm install --save-dev jest@27.5.1
+npm i --save-dev @types/jest@27.4.1
+npm install --save-dev @babel/preset-typescript@7.16.7
+
+
+23
+npm i --save-dev @types/webpack-bundle-analyzer@4.4.1 webpack-bundle-analyzer@4.5.0
+
+24
+npm i --save-dev @testing-library/react@12.1.3
+npm i --save-dev @testing-library/jest-dom@5.16.2
+npm install -D @babel/preset-react@7.16.7
+npm install --save-dev identity-obj-proxy@3.0.0
+npm i -D regenerator-runtime@0.13.9
+
+25
+npx sb init --builder webpack5
+
+26
+npm i -D loki
+npx loki init --config ./config/storybook
+
+npx loki test - запуск локи
+
+интеграция для тестов с CI
+запускаем сборку сторибука
+1-
+npm run storybook:build
+добавить storybook-static в ignore
+
+если падают скриншотные тесты, то поменять runs-on: windows-2019 в yml файле
+
+
+28
+npm i -D reg-cli
+node scripts/generate-visual-json-report.js
+reg-cli --from .loki/report.json --report .loki/report.html
+
+
+29
+npm install eslint-plugin-react-hooks --save-dev
+
+<ReturnType<typeof setTimeout>> - возвращает тип, той или иной функции
+
+30
+npm i @reduxjs/toolkit@1.8.0 react-redux@7.2.6
+
+32
+npm install -g json-server
+json-server --watch ./json-server/db.json --port 8000
+
+33
+npx husky-init
+
+

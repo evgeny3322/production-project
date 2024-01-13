@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+    loginByUserName,
+} from '../service/loginByUserName/loginByUserName';
 import { LoginSchema } from '../types/loginSchema';
-import { loginByUsername } from '../services/loginByUsername/loginByUsername';
 
 const initialState: LoginSchema = {
     isLoading: false,
-    username: '',
+    userName: '',
     password: '',
 };
 
 export const loginSlice = createSlice({
-    name: 'login',
+    name: 'user',
     initialState,
     reducers: {
-        setUsername: (state, action: PayloadAction<string>) => {
-            state.username = action.payload;
+        setUserName: (state, action: PayloadAction<string>) => {
+            state.userName = action.payload;
         },
         setPassword: (state, action: PayloadAction<string>) => {
             state.password = action.payload;
@@ -21,20 +23,18 @@ export const loginSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(loginByUsername.pending, (state) => {
+            .addCase(loginByUserName.pending, (state, action) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(loginByUsername.fulfilled, (state) => {
+            .addCase(loginByUserName.fulfilled, (state, action) => {
                 state.isLoading = false;
             })
-            .addCase(loginByUsername.rejected, (state, action) => {
+            .addCase(loginByUserName.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
     },
 });
-
-// Action creators are generated for each case reducer function
 export const { actions: loginActions } = loginSlice;
 export const { reducer: loginReducer } = loginSlice;
