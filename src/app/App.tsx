@@ -7,9 +7,10 @@ import { Sidebar } from 'widgets/Sidebar';
 import { useDispatch } from 'react-redux';
 import { userActions } from 'entities/User';
 
-export function App() {
+function App() {
     const { theme } = useTheme();
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(userActions.initAuthData());
     }, [dispatch]);
@@ -26,3 +27,5 @@ export function App() {
         </div>
     );
 }
+
+export default App;

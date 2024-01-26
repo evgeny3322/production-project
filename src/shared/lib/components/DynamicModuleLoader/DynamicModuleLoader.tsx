@@ -1,41 +1,44 @@
+import { classNames } from 'shared/lib/classNames/classNames';
+import { useTranslation } from 'react-i18next';
 import { FC, useEffect } from 'react';
+import { loginReducer } from 'features/AuthByUsername/model/slice/loginSlice';
 import { useDispatch, useStore } from 'react-redux';
-import { ReduxStoreWIthManager } from 'app/providers/StoreProvider';
-import { StateSchemaKey } from 'app/providers/StoreProvider/config/StateSchema';
+import { ReduxStoreWithManager, StateSchemaKey } from 'app/providers/StoreProvider/config/StateSchema';
 import { Reducer } from '@reduxjs/toolkit';
+import cls from './DynamicModuleLoader.module.scss';
 
-export type ReducerList = {
-    [name in StateSchemaKey]?: Reducer
+export type ReducersList = {
+    [name in StateSchemaKey]?: Reducer;
 }
 
-type ReducerListEntry = [StateSchemaKey, Reducer]
+type ReducersListEntry = [StateSchemaKey, Reducer]
 
 interface DynamicModuleLoaderProps {
-    reducers: ReducerList;
-    removeAfterUnmount?: boolean
+    reducers: ReducersList;
+    removeAfterUnmount?: boolean;
 }
 
 export const DynamicModuleLoader: FC<DynamicModuleLoaderProps> = (props) => {
     const {
-        children, reducers, removeAfterUnmount = false,
+        children,
+        reducers,
+        removeAfterUnmount,
     } = props;
-    const store = useStore() as ReduxStoreWIthManager;
+
+    const store = useStore() as ReduxStoreWithManager;
     const dispatch = useDispatch();
 
     useEffect(() => {
-        Object.entries(reducers).forEach(([name, reducer]: ReducerListEntry) => {
+        Object.entries(reducers).forEach(([name, reducer]: ReducersListEntry) => {
             store.reducerManager.add(name, reducer);
-
-            // проверяем в redux dev tools, срабатывает ли action
-            dispatch({ type: `init ${name} reducer` });
+            dispatch({ type: `@INIT ${name} reducer` });
         });
 
         return () => {
             if (removeAfterUnmount) {
-                Object.entries(reducers).forEach(([name, reducer]: ReducerListEntry) => {
+                Object.entries(reducers).forEach(([name, reducer]: ReducersListEntry) => {
                     store.reducerManager.remove(name);
-                    // проверяем в redux dev tools, убирается ли action
-                    dispatch({ type: `dis ${name} reducer` });
+                    dispatch({ type: `@DESTROY ${name} reducer` });
                 });
             }
         };

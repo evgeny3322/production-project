@@ -1,22 +1,21 @@
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'app/providers/ThemeProvider';
-import { App } from 'app/App';
+import { StoreProvider } from 'app/providers/StoreProvider';
+import App from './app/App';
 import 'app/styles/index.scss';
-
-import 'shared/config/i18n/i18n';
-import { ErrorBoundary } from 'app/providers/ErrorBoundary';
-import { StoreProviders } from 'app/providers/StoreProvider';
+import './shared/config/i18n/i18n';
+import { ErrorBoundary } from './app/providers/ErrorBoundary';
 
 render(
-    <StoreProviders>
+    <StoreProvider>
         <BrowserRouter>
-            <ThemeProvider>
-                <ErrorBoundary>
+            <ErrorBoundary>
+                <ThemeProvider>
                     <App />
-                </ErrorBoundary>
-            </ThemeProvider>
+                </ThemeProvider>
+            </ErrorBoundary>
         </BrowserRouter>
-    </StoreProviders>,
+    </StoreProvider>,
     document.getElementById('root'),
 );

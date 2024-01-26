@@ -112,4 +112,26 @@ json-server --watch ./json-server/db.json --port 8000
 33
 npx husky-init
 
+37
+Тимур, привет. Локи по ходу придется отключить, так после обновления хрома. Возникает следующая ошибка. Нигде не указано как ее фиксить. Проблема пока не решена. Если знаешь, или кто либо знает, как это фиксить просьба сообщить
+chrome.app
+Fetching stories
+Using unsafe HTTP verb GET to invoke /json/new. This action supports only PUT verb.
 
+Александр
+Я открывал issue https://github.com/oblador/loki/issues/444, в котором меня перенаправили на workaround
+https://github.com/oblador/loki/issues/442#issuecomment-1460082773. И это работает, но помним, что overrides
+появились в npm с версии 8.3 (на 14 ноде не заработало, на 16 заработало). Так же помним про известную багу
+https://github.com/npm/cli/issues/4232. И еще момент который пришлось поравить в файле config/storybook/webpack.config.ts.
+А именно заменить config.resolve!.modules!.push(paths.src) на config.resolve!.modules!.unshift(paths.src). И о чудо - оно работает))
+
+
+45
+npm i concurrently -D
+
+46
+npm i concurrently -D
+
+
+Чтобы использовать в css kebab-case, в cssLoader, в options -> modules можно добавить exportLocalsConvention:
+'camelCase'. Вдруг кому полезно будет
